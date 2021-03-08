@@ -1,0 +1,43 @@
+{% extends "home.html" %}
+
+{% block content %}
+      <table class="table table-striped table-hover">
+          <thead>
+          <tr>
+              <th>编号</th>
+              <th>书名</th>
+              <th>价格</th>
+              <th>出版日期</th>
+              <th>出版社</th>
+              <th>作者</th>
+              <th class="text-center">操作</th>
+          </tr>
+          </thead>
+          <tbody>
+              {% for foo in book_queryset %}
+                  <tr>
+                      <td>{{ foo.pk }}</td>
+                      <td>{{ foo.title }}</td>
+                      <td>{{ foo.price }}</td>
+                      <td>{{ foo.publish_date|date:"Y-m-d" }}</td>
+                      <td>{{ foo.publish.name }}</td>
+                      <td>
+                          {% for author in foo.authors.all %}
+                              {% if forloop.last %}
+                                  {{ author.name }}
+                              {% else %}
+                                  {{ author.name }},
+                              {% endif %}
+
+                          {% endfor %}
+                      </td>
+                      <td class="text-center">
+                        <button class="btn btn-primary btn-xs ">编辑</button>
+                        <button class="btn btn-danger btn-xs">删除</button>
+                      </td>
+                  </tr>
+              {% endfor %}
+
+          </tbody>
+      </table>
+{% endblock %}
